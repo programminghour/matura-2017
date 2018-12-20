@@ -1,0 +1,22 @@
+int sasiadujacy(int tab[200][320])
+{
+    int ilosc=0;
+
+    for(int i=0;i<200;i++)
+    {
+        for(int j=0;j<319;j++)
+        {
+            if(i==0)
+            {
+               if(tab[i][j]-tab[i][j+1]>=128 || tab[i][j+1]-tab[i][j]>=128)
+               {
+                   ilosc++;
+                   break;
+               }
+            }
+            if(j==0)
+        }
+
+    }
+
+}
