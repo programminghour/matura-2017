@@ -1,3 +1,58 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int tab[200][320];
+
+int najwiekszy(int tab[200][320])
+{
+    int najwiekszy = tab[0][0];
+
+    for(int i=0;i<200;i++)
+    {
+        for(int j=0;j<320;j++)
+            if(najwiekszy<tab[i][j])
+                najwiekszy=tab[i][j];
+    }
+    return najwiekszy;
+}
+
+int najciemniejsza(int tab[200][320])
+{
+    int najciemniejszy=tab[0][0];
+
+    for(int i=0;i<200;i++)
+    {
+        for(int j=0;j<320;j++)
+            if(najciemniejszy>tab[i][j])
+                najciemniejszy=tab[i][j];
+    }
+    return najciemniejszy;
+}
+
+
+
+int drugie(int tab[200][320])
+{
+    int ilosc=0;
+
+    for(int i=0;i<200;i++)
+    {
+        for(int j=0;j<=160;j++)
+            {
+                if(tab[i][j]!=tab[i][319-j])
+                {
+                    ilosc++;
+                    break;
+                }
+            }
+    }
+
+    return ilosc;
+
+}
+
 int sasiadujacy(int tab[200][320])
 {
     int ilosc=0;
@@ -41,4 +96,53 @@ int sasiadujacy(int tab[200][320])
 
     return ilosc;
 
+}
+
+int ostatnie(int tab[200][320])
+{
+    int dlugosc=0;
+
+    int przechow = 0;
+
+    for( int j=0;j<320;j++)
+    {
+
+        for(int i=0;i<199;i++)
+        {
+            if(tab[i][j]==tab[i+1][j])
+                przechow++;
+            else
+            {
+                if(dlugosc<przechow)
+                    dlugosc=przechow+1;
+                przechow=0;
+            }
+        }
+
+    }
+    return dlugosc;
+}
+
+int main()
+{
+     ifstream  plik("dane.txt");
+     ofstream  wyniki("wyniki.txt");
+
+    for(int i=0; i<200; i++)
+    {
+        for(int j=0; j<320;j++)
+             plik>>tab[i][j];
+    }
+
+    wyniki<<"Najjasniejsza jest wartosc:"<<najwiekszy(tab)<<endl;
+    wyniki<<"Najciemniejsza jest wartosc:"<<najciemniejsza(tab)<<endl;
+    wyniki<<"Trzeba usunac conajmniej:"<<drugie(tab)<<endl;
+    wyniki<<"Liczba kontrastujacych pikseli:"<<sasiadujacy(tab)<<endl;
+    wyniki<<"Najdluzsza linia o tej samej jasnosci ma dlugosc:"<<ostatnie(tab);
+
+
+    plik.close();
+    wyniki.close();
+
+    return 0;
 }
