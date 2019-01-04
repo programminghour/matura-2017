@@ -1,27 +1,44 @@
 int sasiadujacy(int tab[200][320])
 {
     int ilosc=0;
+    bool czykontrast[200][320];
+
+    for(int i=0;i<200;i++)
+        for(int j=0;j<320;j++)
+            czykontrast[i][j]=false;
 
     for(int i=0;i<200;i++)
     {
-        for(int j=0;j<319;j++)
+        for(int j=0;j<320;j++)
         {
-            if(i==0)
+            if(j<319)
             {
-               if(tab[i][j]-tab[i][j+1]>=128 || tab[i][j+1]-tab[i][j]>=128)
+               if(tab[i][j]-tab[i][j+1]>128 || tab[i][j+1]-tab[i][j]>128)
                {
-                   ilosc++;
-                   break;
+                   czykontrast[i][j]=true;
+                   czykontrast[i][j+1]=true;
+
                }
             }
-            if(j==0)
+            if(i<199)
             {
-                if(tab[i][j]-tab[i+1][j]>=128 || tab[i+1][j]-tab[i][j]>=128)
+                if(tab[i][j]-tab[i+1][j]>128 || tab[i+1][j]-tab[i][j]>128)
                 {
-                    ilosc++;
-                    break;
+
+                    czykontrast[i][j]=true;
+                    czykontrast[i+1][j]=true;
+
                 }
             }
         }
 
     }
+
+    for(int i=0;i<200;i++)
+        for(int j=0;j<320;j++)
+            if(czykontrast[i][j]==true)
+                ilosc++;
+
+    return ilosc;
+
+}
